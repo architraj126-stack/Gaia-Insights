@@ -1,0 +1,54 @@
+id: "sea_surface_temperature"
+name: "Sea Surface Temperature"
+category: "Ocean"
+description: "Daily high-resolution sea surface temperature (OISST v2.1) combining satellite AVHRR, ship, and buoy observations on a global 0.25° ocean grid."
+scientific_question: "How have ocean surface temperatures warmed across marine basins since 1981?"
+default_dataset_id: "noaa_oisst_v21"
+status: "Unavailable - real data not yet ingested"
+datasets:
+  - id: "noaa_oisst_v21"
+    variable_id: "sea_surface_temperature"
+    product_name: "NOAA 1/4° Daily Optimum Interpolation Sea Surface Temperature (OISST) Version 2.1"
+    provider: "NOAA NCEI / PSL"
+    short_name: "OISSTv2.1"
+    collection_id: "noaa.oisst.v2.highres"
+    version: "v2.1"
+    doi: "10.25921/RE9P-PT57"
+    doi_status: "Verified"
+    native_variable_name: "sst"
+    long_name: "Daily Sea Surface Temperature"
+    var_desc: "Sea Surface Temperature"
+    units: "degC"
+    displayed_unit_conversion: "°C (Native)"
+    valid_range:
+      - -3.0
+      - 45.0
+    fill_value: -9.96921e36
+    spatial_grid: "regular_lat_lon"
+    crs: "EPSG:4326"
+    cell_dimensions:
+      - 0.25
+      - 0.25
+    spatial_coverage: "Ocean-only (Global ocean surface: -89.875 to 89.875 lat, 0.125 to 359.875 lon)"
+    spatial_resolution: "0.25° × 0.25°"
+    temporal_resolution: "daily"
+    start_date: "1981-09-01"
+    latest_observation_date: null
+    latest_observation_status: "Unavailable - real data not yet ingested"
+    update_latency: null
+    update_latency_status: "Needs validation"
+    product_documentation: "https://www.ncei.noaa.gov/products/optimum-interpolation-sst"
+    citation: "Huang, B., C. Liu, V. Banzon, E. Freeman, G. Graham, B. Hankins, T. Smith, and H.-M. Zhang, 2021: Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version 2.1. J. Climate, 34, 2923–2939, https://doi.org/10.1175/JCLI-D-20-0166.1. NOAA National Centers for Environmental Information, https://doi.org/10.25921/RE9P-PT57"
+    access_url: "https://downloads.psl.noaa.gov/Datasets/noaa.oisst.v2.highres/"
+    opendap_url: "https://psl.noaa.gov/thredds/dodsC/Datasets/noaa.oisst.v2.highres/sst.mon.mean.nc"
+    terms_licensing: "NOAA Open Data Policy. Unrestricted access with proper scientific attribution."
+    known_limitations: "NOAA OISST v2.1 is an ocean-only blended product; terrestrial land cells have no observations and are strictly masked. Polar ice-covered oceans use a proxy freezing temperature of -1.8°C based on satellite sea-ice concentrations."
+    no_data_mask_semantics: "Values <= -9.0e36 or outside valid range [-3.0, 45.0] decoded to NaN. Terrestrial land cells masked to NaN (ocean-only variable). Missing is never zero."
+    status: "Unavailable - real data not yet ingested"
+    fields:
+      - field_short_name: "sst"
+        long_name: "Daily Sea Surface Temperature"
+        units: "degC"
+        vertical_level: "surface"
+        fill_value: -9.96921e36
+        aggregation_semantics: "state_mean_time_weighted"

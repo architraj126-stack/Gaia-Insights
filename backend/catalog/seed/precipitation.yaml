@@ -1,0 +1,54 @@
+id: "precipitation"
+name: "Precipitation"
+category: "Atmosphere"
+description: "Global monthly precipitation estimates combining satellite and gauge observations."
+scientific_question: "How has precipitation intensity and distribution changed over time across regional and global scales?"
+default_dataset_id: "gpcp_monthly_v23"
+status: "Available"
+datasets:
+  - id: "gpcp_monthly_v23"
+    variable_id: "precipitation"
+    product_name: "Global Precipitation Climatology Project (GPCP) Monthly Analysis Product"
+    provider: "NOAA Physical Sciences Laboratory (PSL)"
+    short_name: "gpcp_monthly_v23"
+    collection_id: "44"
+    version: "V2.3"
+    doi: null
+    doi_status: "Needs validation"
+    native_variable_name: "precip"
+    long_name: "Average Monthly Rate of Precipitation"
+    var_desc: "Precipitation"
+    units: "mm/day"
+    displayed_unit_conversion: null
+    valid_range:
+      - 0.0
+      - 100.0
+    fill_value: -9.96921e+36
+    spatial_grid: "regular_lat_lon"
+    crs: "EPSG:4326"
+    cell_dimensions:
+      - 2.5
+      - 2.5
+    spatial_coverage: "Global (-90 to 90 lat, 0 to 357.5 lon)"
+    spatial_resolution: "2.5° × 2.5°"
+    temporal_resolution: "monthly"
+    start_date: "1979-01-01"
+    latest_observation_date: "2026-10-01"
+    latest_observation_status: "Available"
+    update_latency: null
+    update_latency_status: "Needs validation"
+    product_documentation: "https://www.psl.noaa.gov/data/gridded/data.gpcp.html"
+    citation: "Adler, R.F., G.J. Huffman, A. Chang, R. Ferraro, P. Xie, J. Janowiak, B. Rudolf, U. Schneider, S. Curtis, D. Bolvin, A. Gruber, J. Susskind, P. Arkin, 2003: The Version 2 Global Precipitation Climatology Project (GPCP) Monthly Precipitation Analysis (1979 - Present). J. Hydrometeor., 4(6), 1147-1167."
+    access_url: "https://downloads.psl.noaa.gov/Datasets/gpcp/precip.mon.mean.nc"
+    opendap_url: "https://psl.noaa.gov/thredds/dodsC/Datasets/gpcp/precip.mon.mean.nc"
+    terms_licensing: "Data provided by the NOAA PSL, Boulder, Colorado, USA, from their website at https://psl.noaa.gov. Users are requested to acknowledge NOAA PSL in publications."
+    known_limitations: "V2.3 is the legacy 2.5° × 2.5° global monthly record from Jan 1979. Interim data covers 2021/11 through latest. In accordance with SPEC 6.1, versions must not be mixed invisibly."
+    no_data_mask_semantics: "Values <= -9.0e36 or outside valid range [0, 100] decoded to NaN. Missing is never zero."
+    status: "Available"
+    fields:
+      - field_short_name: "precip"
+        long_name: "Average Monthly Rate of Precipitation"
+        units: "mm/day"
+        vertical_level: "surface"
+        fill_value: -9.96921e+36
+        aggregation_semantics: "rate_accumulate_by_month_days"

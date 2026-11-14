@@ -1,0 +1,54 @@
+id: "soil_moisture"
+name: "Soil Moisture"
+category: "Land"
+description: "Monthly surface soil moisture (0-10 cm layer) simulated by the NASA GLDAS Noah Land Surface Model v2.1 on a global 0.25° grid."
+scientific_question: "How have terrestrial root and surface soil moisture levels changed across drylands and agricultural basins since 2000?"
+default_dataset_id: "gldas_noah025_m_v21"
+status: "Unavailable - real data not yet ingested"
+datasets:
+  - id: "gldas_noah025_m_v21"
+    variable_id: "soil_moisture"
+    product_name: "GLDAS Noah Land Surface Model L4 monthly 0.25 x 0.25 degree V2.1"
+    provider: "NASA GES DISC"
+    short_name: "GLDAS_NOAH025_M"
+    collection_id: "C1342986036-GES_DISC"
+    version: "2.1"
+    doi: "10.5067/SXAVCZFAQLNO"
+    doi_status: "Verified"
+    native_variable_name: "SoilMoi0_10cm_inst"
+    long_name: "Soil moisture content (0-10 cm)"
+    var_desc: "Soil Moisture (0-10 cm underground layer)"
+    units: "kg/m²"
+    displayed_unit_conversion: "kg/m² (1 kg/m² = 1 mm water equivalent = 0.01 m³/m³ volumetric fraction)"
+    valid_range:
+      - 0.0
+      - 100.0
+    fill_value: -9999.0
+    spatial_grid: "regular_lat_lon"
+    crs: "EPSG:4326"
+    cell_dimensions:
+      - 0.25
+      - 0.25
+    spatial_coverage: "Land-only (Global land surface: -59.875 to 89.875 lat, -179.875 to 179.875 lon)"
+    spatial_resolution: "0.25° × 0.25°"
+    temporal_resolution: "monthly"
+    start_date: "2000-01-01"
+    latest_observation_date: null
+    latest_observation_status: "Unavailable - real data not yet ingested"
+    update_latency: null
+    update_latency_status: "Needs validation"
+    product_documentation: "https://ldas.gsfc.nasa.gov/gldas/"
+    citation: "Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Noah Land Surface Model L4 monthly 0.25 x 0.25 degree V2.1, Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), https://doi.org/10.5067/SXAVCZFAQLNO"
+    access_url: "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH025_M.2.1/"
+    opendap_url: "https://opendap.earthdata.nasa.gov/collections/C1342986036-GES_DISC/granules/"
+    terms_licensing: "NASA open data policy. Unrestricted research and educational use with scientific attribution."
+    known_limitations: "GLDAS Noah soil moisture is model-simulated water storage (0–10 cm layer) driven by atmospheric data assimilation, not direct in-situ probe or satellite radiometer measurements. GLDAS-2.0 (1948–2014) and GLDAS-2.1 (2000–present) use different meteorological forcing and must not be stitched without bias correction. Ocean cells are strictly masked."
+    no_data_mask_semantics: "Values <= -9998 or outside valid range [0.0, 100.0] decoded to NaN. Ocean cells masked to NaN (land-only variable). Missing is never zero."
+    status: "Unavailable - real data not yet ingested"
+    fields:
+      - field_short_name: "SoilMoi0_10cm_inst"
+        long_name: "Soil moisture content (0-10 cm)"
+        units: "kg/m²"
+        vertical_level: "0-10cm"
+        fill_value: -9999.0
+        aggregation_semantics: "state_mean_time_weighted"
