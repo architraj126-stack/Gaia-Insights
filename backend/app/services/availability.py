@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 UNINGESTED_DATASET_IDS = {
     "merra2_monthly_ts",
-    "noaa_oisst_v21",
     "gldas_noah025_m_v21",
     "merra2_monthly_qv2m",
 }

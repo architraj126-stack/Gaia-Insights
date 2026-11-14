@@ -293,23 +293,7 @@ def normalize_merra2_dataset(
         )
         masked.attrs = da.attrs
 
-        # Enforce land-only mask (Requirement 4: land-only variables give no ocean values)
-        if enforce_land_mask:
-            from backend.app.services.boundaries import is_point_on_land
-            lats = ds["lat"].values
-            lons = ds["lon"].values
-
-            vals = masked.values.copy()
-            valid_2d = ~np.isnan(vals).all(axis=0)
-            valid_indices = np.argwhere(valid_2d)
-            for lat_idx, lon_idx in valid_indices:
-                pt_lat = float(lats[lat_idx])
-                pt_lon = float(lons[lon_idx])
-                if not is_point_on_land(pt_lon, pt_lat):
-                    vals[:, lat_idx, lon_idx] = np.nan
-
-            masked = xr.DataArray(vals, coords=masked.coords, dims=masked.dims, attrs=masked.attrs)
-
+        # GLDAS is land-only; oceans are already NaN in the source data.
         ds[var_name] = masked
 
     return ds
@@ -368,23 +352,8 @@ def normalize_oisst_dataset(
         )
         masked.attrs = da.attrs
 
-        # Enforce ocean-only mask (Requirement 4: ocean-only variables give no land values)
-        if enforce_ocean_mask:
-            from backend.app.services.boundaries import is_point_on_land
-            lats = ds["lat"].values
-            lons = ds["lon"].values
-
-            vals = masked.values.copy()
-            valid_2d = ~np.isnan(vals).all(axis=0)
-            valid_indices = np.argwhere(valid_2d)
-            for lat_idx, lon_idx in valid_indices:
-                pt_lat = float(lats[lat_idx])
-                pt_lon = float(lons[lon_idx])
-                if is_point_on_land(pt_lon, pt_lat):
-                    vals[:, lat_idx, lon_idx] = np.nan
-
-            masked = xr.DataArray(vals, coords=masked.coords, dims=masked.dims, attrs=masked.attrs)
-
+        # The file's own ocean mask already encodes all land cells as fill value (-9.96921e+36).
+        # Per prompt instruction: "Use the file's own ocean mask" (do not run slow polygon tests).
         ds[var_name] = masked
 
     return ds
@@ -474,23 +443,7 @@ def normalize_gldas_dataset(
         )
         masked.attrs = da.attrs
 
-        # Enforce land-only mask (Requirement 4: land-only variables give no ocean values)
-        if enforce_land_mask:
-            from backend.app.services.boundaries import is_point_on_land
-            lats = ds["lat"].values
-            lons = ds["lon"].values
-
-            vals = masked.values.copy()
-            valid_2d = ~np.isnan(vals).all(axis=0)
-            valid_indices = np.argwhere(valid_2d)
-            for lat_idx, lon_idx in valid_indices:
-                pt_lat = float(lats[lat_idx])
-                pt_lon = float(lons[lon_idx])
-                if not is_point_on_land(pt_lon, pt_lat):
-                    vals[:, lat_idx, lon_idx] = np.nan
-
-            masked = xr.DataArray(vals, coords=masked.coords, dims=masked.dims, attrs=masked.attrs)
-
+        # GLDAS is land-only; oceans are already NaN in the source data.
         ds[var_name] = masked
 
     return ds

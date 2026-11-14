@@ -44,6 +44,7 @@ frontend/dist-ssr/
 # Cache & Local Data
 data/cache/*
 !data/cache/.gitkeep
+!data/cache/*manifest.json
 data/outputs/*
 !data/outputs/.gitkeep
 *.nc

@@ -1,0 +1,26 @@
+{
+  "dataset_id": "noaa_oisst_v21",
+  "product_name": "NOAA 1/4\u00b0 Daily Optimum Interpolation Sea Surface Temperature (OISST) Version 2.1",
+  "provider": "NOAA NCEI / PSL",
+  "version": "v2.1",
+  "source_url": "https://downloads.psl.noaa.gov/Datasets/noaa.oisst.v2.highres/sst.mon.mean.nc",
+  "sha256": "f30eaf685fe59e6267599b11b85a4bd5fa5ce86c768a475747aa2fb69f35f61a",
+  "retrieval_date": "2026-11-14T13:28:46.902949+00:00",
+  "time_range": [
+    "1990-01-01",
+    "2026-10-01"
+  ],
+  "time_steps": 442,
+  "spatial_grid": "regular_lat_lon",
+  "cell_dimensions": [
+    0.25,
+    0.25
+  ],
+  "grid_shape": [
+    720,
+    1440
+  ],
+  "native_units": "degC",
+  "fill_value": -9.96921e+36,
+  "ocean_mask": "native_ocean_mask"
+}

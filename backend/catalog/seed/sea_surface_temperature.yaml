@@ -4,7 +4,7 @@ category: "Ocean"
 description: "Daily high-resolution sea surface temperature (OISST v2.1) combining satellite AVHRR, ship, and buoy observations on a global 0.25° ocean grid."
 scientific_question: "How have ocean surface temperatures warmed across marine basins since 1981?"
 default_dataset_id: "noaa_oisst_v21"
-status: "Unavailable - real data not yet ingested"
+status: "Available"
 datasets:
   - id: "noaa_oisst_v21"
     variable_id: "sea_surface_temperature"
@@ -33,8 +33,8 @@ datasets:
     spatial_resolution: "0.25° × 0.25°"
     temporal_resolution: "daily"
     start_date: "1981-09-01"
-    latest_observation_date: null
-    latest_observation_status: "Unavailable - real data not yet ingested"
+    latest_observation_date: "2026-10-01"
+    latest_observation_status: "Available"
     update_latency: null
     update_latency_status: "Needs validation"
     product_documentation: "https://www.ncei.noaa.gov/products/optimum-interpolation-sst"
@@ -44,7 +44,7 @@ datasets:
     terms_licensing: "NOAA Open Data Policy. Unrestricted access with proper scientific attribution."
     known_limitations: "NOAA OISST v2.1 is an ocean-only blended product; terrestrial land cells have no observations and are strictly masked. Polar ice-covered oceans use a proxy freezing temperature of -1.8°C based on satellite sea-ice concentrations."
     no_data_mask_semantics: "Values <= -9.0e36 or outside valid range [-3.0, 45.0] decoded to NaN. Terrestrial land cells masked to NaN (ocean-only variable). Missing is never zero."
-    status: "Unavailable - real data not yet ingested"
+    status: "Available"
     fields:
       - field_short_name: "sst"
         long_name: "Daily Sea Surface Temperature"
