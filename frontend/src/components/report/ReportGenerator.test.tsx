@@ -6,7 +6,7 @@ import * as reportsApi from '../../api/reports';
 describe('ReportGenerator (SPEC 10.7, 10.8, 17.3)', () => {
   const mockReportResponse: reportsApi.ReportResponse = {
     report_id: 'rep_test_9999',
-    title: 'Earth Science Explorer — Precipitation Analysis for Western Europe',
+    title: 'Gaia Insights — Precipitation Analysis for Western Europe',
     status: 'completed',
     created_at: '2026-11-13T19:00:00Z',
     sections_enabled: {

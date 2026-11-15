@@ -25,7 +25,7 @@ router = APIRouter(tags=["reports"])
 
 
 class CreateReportRequest(BaseModel):
-    title: Optional[str] = "Earth Science Explorer — Scientific Analysis Report"
+    title: Optional[str] = "Gaia Insights — Scientific Analysis Report"
     series_id: Optional[str] = None
     change_run_id: Optional[str] = None
     significance_run_id: Optional[str] = None

@@ -12,7 +12,7 @@ export default async function handler(request) {
         {
           status: 'backend_not_configured',
           message:
-            'The Earth Science Explorer frontend is running on Vercel, but no backend URL is configured. Please add the environment variable BACKEND_URL in your Vercel Project Settings (Environment Variables) pointing to your deployed FastAPI backend (e.g. https://your-backend.railway.app or https://your-backend.onrender.com).',
+            'The Gaia Insights frontend is running on Vercel, but no backend URL is configured. Please add the environment variable BACKEND_URL in your Vercel Project Settings (Environment Variables) pointing to your deployed FastAPI backend (e.g. https://your-backend.railway.app or https://your-backend.onrender.com).',
           endpoint: url.pathname + url.search,
         },
         null,

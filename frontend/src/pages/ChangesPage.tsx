@@ -191,7 +191,7 @@ export const ChangesPage: React.FC = () => {
             </div>
             <h2 className="text-lg font-bold text-white">No Dataset or Study Region Configured</h2>
             <p className="text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-              Per Scientific Non-Negotiable Rule 1, Earth Science Explorer never computes or displays placeholder numbers. Please select an Earth-science variable and define your study region to begin change detection.
+              Per Scientific Non-Negotiable Rule 1, Gaia Insights never computes or displays placeholder numbers. Please select an Earth-science variable and define your study region to begin change detection.
             </p>
             <div className="flex justify-center gap-3 pt-3">
               <Link

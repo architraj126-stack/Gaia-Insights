@@ -201,7 +201,7 @@ class NumberedCanvas(canvas.Canvas):
 
         # Running Top Header (Pages 2+)
         if self._pageNumber > 1:
-            self.drawString(54, letter[1] - 36, "Earth Science Explorer — Scientific Analysis Report")
+            self.drawString(54, letter[1] - 36, "Gaia Insights — Scientific Analysis Report")
             self.drawRightString(letter[0] - 54, letter[1] - 36, f"Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}")
             self.setStrokeColor(colors.HexColor("#cbd5e1"))
             self.setLineWidth(0.5)
@@ -713,12 +713,12 @@ def generate_report_pdf(
     story: List[Any] = []
 
     # Title & Header
-    title_text = report_payload.get("title", "Earth Science Explorer — Scientific Analysis Report")
+    title_text = report_payload.get("title", "Gaia Insights — Scientific Analysis Report")
     story.append(Paragraph(title_text, title_style))
     meta_sub = (
         f"Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')} • "
         f"Report ID: <font name='Courier'>{report_payload['report_id']}</font> • "
-        f"Application: Antigravity Earth Science Explorer v{APP_VERSION}"
+        f"Application: Antigravity Gaia Insights v{APP_VERSION}"
     )
     story.append(Paragraph(meta_sub, subtitle_style))
     story.append(HRFlowable(width="100%", thickness=1.5, color=colors.HexColor("#0284c7"), spaceAfter=14))
@@ -1017,7 +1017,7 @@ def generate_report_pdf(
             f"{ds_info.get('citation', NASA_CITATIONS.get('gpcp_monthly_v23', {}).get('citation', ''))}<br/>"
             f"<b>DOI:</b> {ds_info.get('doi', '10.7289/V56971M6')}<br/>"
             f"<b>Access Date:</b> {report_payload.get('access_date', datetime.now(timezone.utc).strftime('%Y-%m-%d'))}<br/>"
-            f"<b>Software Repository & Provenance:</b> Earth Science Explorer v{APP_VERSION} "
+            f"<b>Software Repository & Provenance:</b> Gaia Insights v{APP_VERSION} "
             f"(FastAPI, Xarray, PyMannKendall, Statsmodels, ReportLab)."
         )
         story.append(Paragraph(citation_text, body_style))
@@ -1047,7 +1047,7 @@ def generate_report_csv(
         writer = csv.writer(f)
 
         # Header metadata comments
-        writer.writerow(["# Earth Science Explorer Analysis Report Export"])
+        writer.writerow(["# Gaia Insights Analysis Report Export"])
         writer.writerow(["# Report ID", report_payload.get("report_id", "")])
         writer.writerow(["# Dataset", report_payload.get("dataset_info", {}).get("dataset_id", "")])
         writer.writerow(["# Version", report_payload.get("dataset_info", {}).get("dataset_version", "")])
@@ -1192,7 +1192,7 @@ def create_report(
 
     report_payload = {
         "report_id": report_id,
-        "title": title or "Earth Science Explorer — Scientific Analysis Report",
+        "title": title or "Gaia Insights — Scientific Analysis Report",
         "status": "completed",
         "created_at": created_at,
         "access_date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),

@@ -1,4 +1,4 @@
-# Production Dockerfile for Earth Science Explorer FastAPI Backend
+# Production Dockerfile for Gaia Insights FastAPI Backend
 FROM python:3.11-slim
 
 # Prevent Python from buffering stdout/stderr

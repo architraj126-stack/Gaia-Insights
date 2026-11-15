@@ -1,5 +1,5 @@
 """
-SQLAlchemy ORM models for the Earth Science Explorer (Phase 3a).
+SQLAlchemy ORM models for Gaia Insights (Phase 3a).
 
 Tables (per SPEC 13.2):
   - variables

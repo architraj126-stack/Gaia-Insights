@@ -69,7 +69,7 @@ export const ReportGenerator: React.FC<ReportGeneratorProps> = ({
   className = '',
 }) => {
   const [reportTitle, setReportTitle] = useState<string>(
-    `Earth Science Explorer — ${variableName} Analysis for ${regionLabel}`
+    `Gaia Insights — ${variableName} Analysis for ${regionLabel}`
   );
   const [sections, setSections] = useState<ReportSectionsConfig>({
     executive_summary: true,

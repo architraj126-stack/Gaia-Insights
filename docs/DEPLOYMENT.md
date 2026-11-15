@@ -1,6 +1,6 @@
-# Earth Science Explorer - Deployment Guide
+# Gaia Insights - Deployment Guide
 
-This guide describes how to deploy the Earth Science Explorer web application to **Vercel** (frontend & serverless proxy) and a cloud container host (FastAPI backend).
+This guide describes how to deploy the Gaia Insights web application to **Vercel** (frontend & serverless proxy) and a cloud container host (FastAPI backend).
 
 ---
 

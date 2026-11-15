@@ -4,7 +4,7 @@ from backend.app.config import settings
 from backend.app.logging import redact_sensitive_value, StructuredJsonFormatter
 
 def test_config_defaults():
-    assert settings.APP_NAME == "Earth Science Explorer API"
+    assert settings.APP_NAME == "Gaia Insights API"
     assert "http://localhost:5173" in settings.CORS_ORIGINS
     assert settings.LOG_LEVEL in ["DEBUG", "INFO", "WARNING", "ERROR"]
 

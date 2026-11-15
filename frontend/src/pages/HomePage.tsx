@@ -508,12 +508,12 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8" id="about">
             <div className="md:col-span-2 space-y-3">
-              <div className="text-lg font-bold text-white tracking-tight">Earth Science Explorer</div>
+              <div className="text-lg font-bold text-white tracking-tight">Gaia Insights</div>
               <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
                 A scientific platform dedicated to historical climate exploration, trend detection, and rigorous area-weighted statistical analysis.
               </p>
               <div className="text-[11px] text-cyan-400 font-mono">
-                Earth Science Explorer • NASA & NOAA Observational Records
+                Gaia Insights • NASA & NOAA Observational Records
               </div>
             </div>
 

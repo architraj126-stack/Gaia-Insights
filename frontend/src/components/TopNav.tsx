@@ -36,7 +36,7 @@ export const TopNav: React.FC = () => {
               <Globe2 className="w-5 h-5 text-navy-950" />
             </div>
             <div className="flex flex-col">
-              <span className="leading-tight text-slate-100 font-bold">Earth Science Explorer</span>
+              <span className="leading-tight text-slate-100 font-bold">Gaia Insights</span>
               <span className="text-[10px] text-cyan-400 font-mono tracking-wider uppercase">Historical Data Analysis</span>
             </div>
           </Link>

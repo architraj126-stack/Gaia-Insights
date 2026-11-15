@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 class Settings(BaseSettings):
-    APP_NAME: str = "Earth Science Explorer API"
+    APP_NAME: str = "Gaia Insights API"
     APP_ENV: str = "development"
     DEBUG: bool = True
     HOST: str = "127.0.0.1"

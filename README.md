@@ -1,4 +1,4 @@
-# Earth Science Explorer
+# Gaia Insights
 
 > Web application for exploring historical Earth-science observational records across a guided 5-step analysis journey: **Data Explorer**, **Geographic Explorer**, **Trend Analysis**, **Change Detection**, and **Significance & Reports**.
 

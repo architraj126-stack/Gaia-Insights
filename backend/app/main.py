@@ -20,7 +20,7 @@ logger = logging.getLogger("backend.main")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting Earth Science Explorer API", extra={"env": settings.APP_ENV})
+    logger.info("Starting Gaia Insights API", extra={"env": settings.APP_ENV})
 
     # -----------------------------------------------------------------------
     # Phase 3a startup sequence:
@@ -56,7 +56,7 @@ async def lifespan(app: FastAPI):
         )
 
     yield
-    logger.info("Shutting down Earth Science Explorer API")
+    logger.info("Shutting down Gaia Insights API")
 
 
 app = FastAPI(
