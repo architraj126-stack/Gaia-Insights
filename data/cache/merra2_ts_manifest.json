@@ -1,0 +1,28 @@
+{
+  "dataset_id": "merra2_monthly_ts",
+  "product_name": "MERRA-2 tavgM_2d_slv_Nx: 2d,Monthly mean,Time-Averaged,Single-Level,Assimilation,Single-Level Diagnostics 0.625 x 0.5 degree V5.12.4",
+  "provider": "NASA GES DISC / GMAO",
+  "collection_id": "C1276812859-GES_DISC",
+  "version": "5.12.4",
+  "source_url": "https://opendap.earthdata.nasa.gov/collections/C1276812859-GES_DISC/",
+  "sha256": "cd409615eb2e1839de38deebc9f05ed1cc3576c5fb7323ddb277f8475ebafa02",
+  "retrieval_date": "2026-11-15T06:00:55.401027+00:00",
+  "time_range": [
+    "1990-01-01",
+    "2026-09-01"
+  ],
+  "time_steps": 441,
+  "spatial_grid": "regular_lat_lon",
+  "cell_dimensions": [
+    0.625,
+    0.5
+  ],
+  "grid_shape": [
+    361,
+    576
+  ],
+  "native_units": "K",
+  "fill_value": 1000000000000000.0,
+  "subset_method": "OPeNDAP single-variable extraction",
+  "file_size_bytes": 196805469
+}

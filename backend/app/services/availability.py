@@ -12,9 +12,7 @@ from backend.app.services.boundaries import calculate_geometry_land_ratio
 logger = logging.getLogger(__name__)
 
 UNINGESTED_DATASET_IDS = {
-    "merra2_monthly_ts",
     "gldas_noah025_m_v21",
-    "merra2_monthly_qv2m",
 }
 
 
