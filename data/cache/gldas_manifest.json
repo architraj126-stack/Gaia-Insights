@@ -1,0 +1,27 @@
+{
+  "dataset_id": "gldas_noah_sm",
+  "product_name": "GLDAS Noah Land Surface Model L4 monthly 0.25 x 0.25 degree V2.1",
+  "provider": "NASA GES DISC",
+  "collection_id": "C1342986036-GES_DISC",
+  "version": "v2.1",
+  "source_url": "https://opendap.earthdata.nasa.gov/collections/C1342986036-GES_DISC/",
+  "sha256": "86235b149025d4ecbdc229d0d61abb06def4e92f48785a76f63229ef3fbe81cf",
+  "retrieval_date": "2026-11-15T06:11:27.464517+00:00",
+  "time_range": [
+    "2000-01-01",
+    "2026-07-01"
+  ],
+  "time_steps": 319,
+  "spatial_grid": "regular_lat_lon",
+  "cell_dimensions": [
+    0.25,
+    0.25
+  ],
+  "grid_shape": [
+    600,
+    1440
+  ],
+  "native_units": "kg m-2",
+  "fill_value": -9999.0,
+  "subset_method": "OPeNDAP single-variable extraction"
+}

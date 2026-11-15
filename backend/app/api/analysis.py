@@ -76,9 +76,7 @@ RESULTS_CACHE_DIR = DATA_CACHE_DIR / "results"
 RESULTS_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 SUBSET_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-UNINGESTED_DATASET_IDS = {
-    "gldas_noah025_m_v21",
-}
+UNINGESTED_DATASET_IDS = set()
 
 
 def get_dataset_metadata_from_registry(dataset_id: str) -> Dict[str, Any]:

@@ -11,9 +11,7 @@ from backend.app.services.boundaries import calculate_geometry_land_ratio
 
 logger = logging.getLogger(__name__)
 
-UNINGESTED_DATASET_IDS = {
-    "gldas_noah025_m_v21",
-}
+UNINGESTED_DATASET_IDS = set()
 
 
 def parse_iso_date(date_str: str) -> Optional[datetime]:
