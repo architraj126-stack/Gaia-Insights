@@ -330,17 +330,17 @@ This guarantees that the expected proportion of false discoveries among rejected
 
 ## 9. Clashes, Commit Errors, CI Pipeline Failures & Proposed Solutions
 
-### 9.1 Clash 1: Remote Repository Name Collision
+### 9.1 Clash 1: Remote Repository Name Collision & Clean Repository Recreation
 - **Error:** `GraphQL: Name already exists on this account (createRepository)` when executing `gh repo create Gaia-Insights --public`.
 - **Root Cause:** The user account `architraj126-stack` had previously initialized a repository named `Gaia-Insights` containing early prototype commits (`4c51bfc` through `6e4f7fd`).
 - **Investigated Solutions:**
-  - *Option A:* Create a renamed repository (`gaia-insights-v2`). Rejected: disrupts naming alignment requested by user.
-  - *Option B (Implemented):* Configure existing GitHub repository `architraj126-stack/Gaia-Insights` as `origin`. Preserve existing history by backing up remote `main` to `legacy-main`, then synchronize the modern, fully verified codebase to `main`.
-- **Credibility Recheck:** Verified via GitHub API that `legacy-main` contains the old history untouched, while `main` reflects the verified production tree.
+  - *Initial Resolution:* Configured existing GitHub repository `architraj126-stack/Gaia-Insights` as `origin`, backed up remote `main` to `legacy-main`, and pushed verified commits.
+  - *Final Clean Recreation:* The user subsequently cleared the old prototype repository on GitHub. A clean repository was created via `gh repo create Gaia-Insights --public --source=. --remote=origin`, establishing a fresh linear git history directly on `main`.
+- **Credibility Recheck:** Verified via GitHub API that `architraj126-stack/Gaia-Insights` is publicly accessible, has clean tracking with `origin/main`, and all 8 atomic commits are present.
 
 ### 9.2 Clash 2: Non-Fast-Forward Push Rejection
 - **Error:** `[rejected] master -> main (non-fast-forward)`.
-- **Root Cause:** Local Git history started from an independent root commit (`1a53e9e`), whereas remote `main` had commit `6e4f7fd` as its tip. Without a common ancestor, standard `git push` is blocked by Git's fast-forward safety check.
+- **Root Cause:** Local Git history started from an independent root commit (`1a53e9e`), whereas the initial remote `main` had commit `6e4f7fd` as its tip. Without a common ancestor, standard `git push` is blocked by Git's fast-forward safety check.
 - **Investigated Solutions:**
   - *Option A:* `git merge --allow-unrelated-histories`. Rejected: creates a noisy, messy merge commit blending deprecated prototype files with modern production files.
   - *Option B (Implemented):* Safely preserve old remote `main` under `refs/heads/legacy-main` on GitHub, rename local `master` to `main`, and push using `--force-with-lease`.
@@ -350,6 +350,15 @@ This guarantees that the expected proportion of false discoveries among rejected
 - **Error:** MERRA-2 TS and QV2M NetCDF time coordinates were decoded identically as `1990-01-01` across all 441 months.
 - **Root Cause:** NASA OPeNDAP monthly subsets each individual granule with `time = [0]` and relative unit string `minutes since YYYY-MM-01 00:30:00`. Standard concatenation assigned the first file's unit string to all subsequent timesteps.
 - **Solution:** Injected explicit CF-compliant epoch translation (`days since 1980-01-01`) calculating absolute elapsed days from month-index, accompanied by SHA-256 manifest validation.
+
+### 9.4 Vercel Deployment Build Error (BUILD_UTILS_SPAWN_127 / tsc: command not found)
+- **Error:** `sh: line 1: tsc: command not found` with `Error: [BUILD_UTILS_SPAWN_127] Command "npm --prefix frontend run build" exited with 127`.
+- **Root Cause:** In the root monorepo, `vercel.json` lacked an explicit `installCommand`. Vercel CLI executed default `npm install` in the root folder (taking 573ms because root had 0 dependencies), failing to install packages in `frontend/node_modules/`. When Vercel proceeded to run `npm --prefix frontend run build`, TypeScript (`tsc`) was absent in PATH. Furthermore, `typescript` and `vite` were listed under `devDependencies`, which are pruned in production environments by default.
+- **Investigated Solutions:**
+  - *Step 1:* Configured explicit `installCommand: "cd frontend && npm install --include=dev"` and `buildCommand: "cd frontend && npm run build"` in `vercel.json`.
+  - *Step 2:* Added `"workspaces": ["frontend"]` to root `package.json` and generated root `package-lock.json` so monorepo workspace installations are recognized automatically by Vercel.
+  - *Step 3:* Elevated `typescript`, `vite`, `@vitejs/plugin-react`, `tailwindcss`, `postcss`, and `autoprefixer` into `dependencies` in `frontend/package.json` to prevent omission under `NODE_ENV=production`.
+- **Credibility Recheck:** Executed `npm run build` from root locally and verified sub-4s compilation with complete Rollup asset bundling. Tested frontend and backend test suites cleanly.
 
 ---
 
