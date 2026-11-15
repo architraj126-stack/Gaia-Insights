@@ -1,0 +1,13 @@
+{
+  "name": "earth-science-explorer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm --prefix frontend run build",
+    "dev": "npm --prefix frontend run dev",
+    "lint": "npm --prefix frontend run lint",
+    "test": "npm --prefix frontend run test",
+    "preview": "npm --prefix frontend run preview"
+  }
+}

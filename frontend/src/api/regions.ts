@@ -1,4 +1,5 @@
 import type { Geometry } from 'geojson';
+import { apiFetch } from './client';
 
 export interface RegionSearchResult {
   id: string;
@@ -46,7 +47,7 @@ export interface RegionValidateResponse {
 
 export async function searchRegions(query: string, limit: number = 20): Promise<RegionSearchResult[]> {
   const url = `/api/regions/search?q=${encodeURIComponent(query)}&limit=${limit}`;
-  const response = await fetch(url);
+  const response = await apiFetch(url);
   if (!response.ok) {
     throw new Error(`Failed to search regions (HTTP ${response.status})`);
   }
@@ -54,7 +55,7 @@ export async function searchRegions(query: string, limit: number = 20): Promise<
 }
 
 export async function fetchRegionGeometry(regionId: string): Promise<RegionGeometryResponse> {
-  const response = await fetch(`/api/regions/${encodeURIComponent(regionId)}/geometry`);
+  const response = await apiFetch(`/api/regions/${encodeURIComponent(regionId)}/geometry`);
   if (!response.ok) {
     throw new Error(`Failed to fetch region geometry (HTTP ${response.status})`);
   }
@@ -62,7 +63,7 @@ export async function fetchRegionGeometry(regionId: string): Promise<RegionGeome
 }
 
 export async function validateRegion(req: RegionValidateRequest): Promise<RegionValidateResponse> {
-  const response = await fetch('/api/regions/validate', {
+  const response = await apiFetch('/api/regions/validate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(req),

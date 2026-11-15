@@ -1,6 +1,7 @@
 /**
  * Change Detection API client (SPEC Section 9, 14.5, 14.8).
  */
+import { apiFetch, getApiUrl } from './client';
 
 export interface ChangeMapLegend {
   colormap: string;
@@ -87,7 +88,7 @@ export interface CellInspectResult {
 export async function executeChangeMapAnalysis(
   payload: ChangeMapRequestPayload
 ): Promise<ChangeMapResult> {
-  const response = await fetch('/api/analysis/change-map', {
+  const response = await apiFetch('/api/analysis/change-map', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -106,15 +107,21 @@ export async function executeChangeMapAnalysis(
     throw new Error(errorDetail);
   }
 
-  return response.json();
+  const data: ChangeMapResult = await response.json();
+  if (data.overlay_url) data.overlay_url = getApiUrl(data.overlay_url);
+  if (data.geotiff_url) data.geotiff_url = getApiUrl(data.geotiff_url);
+  return data;
 }
 
 export async function fetchChangeMapResult(runId: string): Promise<ChangeMapResult> {
-  const response = await fetch(`/api/analysis/change-map/${runId}`);
+  const response = await apiFetch(`/api/analysis/change-map/${runId}`);
   if (!response.ok) {
     throw new Error(`Failed to load change map result (${response.status})`);
   }
-  return response.json();
+  const data: ChangeMapResult = await response.json();
+  if (data.overlay_url) data.overlay_url = getApiUrl(data.overlay_url);
+  if (data.geotiff_url) data.geotiff_url = getApiUrl(data.geotiff_url);
+  return data;
 }
 
 export async function inspectChangeCell(
@@ -122,7 +129,7 @@ export async function inspectChangeCell(
   lat: number,
   lon: number
 ): Promise<CellInspectResult> {
-  const response = await fetch(
+  const response = await apiFetch(
     `/api/analysis/change-map/${runId}/inspect?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`
   );
   if (!response.ok) {

@@ -39,6 +39,8 @@ export interface DatasetCatalogItem {
   status: string;
 }
 
+import { apiFetch } from './client';
+
 export interface VariableCatalogItem {
   id: string;
   name: string;
@@ -77,7 +79,7 @@ export function formatCatalogueCheck(isoTimestamp: string | null | undefined): s
 }
 
 export async function fetchVariables(): Promise<VariableCatalogItem[]> {
-  const response = await fetch('/api/catalog/variables');
+  const response = await apiFetch('/api/catalog/variables');
   if (!response.ok) {
     throw new Error(`Failed to fetch catalog variables (HTTP ${response.status})`);
   }
@@ -88,7 +90,7 @@ export async function fetchDatasets(variableId?: string): Promise<DatasetCatalog
   const url = variableId
     ? `/api/catalog/datasets?variable=${encodeURIComponent(variableId)}`
     : '/api/catalog/datasets';
-  const response = await fetch(url);
+  const response = await apiFetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch catalog datasets (HTTP ${response.status})`);
   }

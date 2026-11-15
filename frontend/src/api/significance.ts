@@ -1,6 +1,7 @@
 /**
  * Significance & Hypothesis Testing API client (SPEC Section 10, 14.6, 14.7, 14.8).
  */
+import { apiFetch, getApiUrl } from './client';
 
 export interface SignificanceClassItem {
   code: number;
@@ -88,7 +89,7 @@ export interface SignificanceRequestPayload {
 export async function executeSignificanceAnalysis(
   payload: SignificanceRequestPayload
 ): Promise<SignificanceAnalysisResult> {
-  const resp = await fetch('/api/analysis/significance', {
+  const resp = await apiFetch('/api/analysis/significance', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -107,7 +108,10 @@ export async function executeSignificanceAnalysis(
     throw new Error(errMessage);
   }
 
-  return (await resp.json()) as SignificanceAnalysisResult;
+  const data = (await resp.json()) as SignificanceAnalysisResult;
+  if (data.spatial?.overlay_url) data.spatial.overlay_url = getApiUrl(data.spatial.overlay_url);
+  if (data.spatial?.geotiff_url) data.spatial.geotiff_url = getApiUrl(data.spatial.geotiff_url);
+  return data;
 }
 
 /**
@@ -133,9 +137,12 @@ export async function reclassifySignificance(
  * Fetches cached significance result by run_id
  */
 export async function fetchSignificanceResult(runId: string): Promise<SignificanceAnalysisResult> {
-  const resp = await fetch(`/api/analysis/significance/${runId}`);
+  const resp = await apiFetch(`/api/analysis/significance/${runId}`);
   if (!resp.ok) {
     throw new Error(`Failed to fetch significance run '${runId}' (${resp.status})`);
   }
-  return (await resp.json()) as SignificanceAnalysisResult;
+  const data = (await resp.json()) as SignificanceAnalysisResult;
+  if (data.spatial?.overlay_url) data.spatial.overlay_url = getApiUrl(data.spatial.overlay_url);
+  if (data.spatial?.geotiff_url) data.spatial.geotiff_url = getApiUrl(data.spatial.geotiff_url);
+  return data;
 }

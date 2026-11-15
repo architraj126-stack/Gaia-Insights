@@ -1,0 +1,28 @@
+# Vercel Ignore - Exclude heavy backend & scientific data files from frontend deployment
+
+# Data caches (1.5+ GB NetCDF files)
+data/cache/
+data/outputs/
+*.nc
+*.nc4
+
+# Backend python environment and tests
+backend/
+alembic/
+alembic.ini
+.pytest_cache/
+tests/
+scratch/
+scripts/
+
+# Docker & local batch scripts
+docker-compose.yml
+run.bat
+setup.bat
+
+# Git & environments
+.git/
+.env
+.env.local
+*.pyc
+__pycache__/

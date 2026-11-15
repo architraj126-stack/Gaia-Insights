@@ -645,3 +645,35 @@ Following the data volume audit, four datasets (`merra2_monthly_ts`, `noaa_oisst
      - `test_four_datasets_return_unavailable_until_real_data_exists`: asserts seed catalog, availability check, and all analysis endpoints return `"Unavailable - real data not yet ingested"`.
      - `test_no_hardcoded_date_strings_grep`: grep test that fails if `"2026-10-01"`, `[2006, 2025]`, or `"2025-12-01"` are reintroduced in `backend/app/`.
 
+---
+
+## ADR-017: Vercel Production Deployment Architecture & Edge API Proxying
+
+**Date:** 2026-11-15  
+**Status:** Accepted  
+**Context:**  
+The user requested deployment readiness for Vercel. Because the application consists of a modern React + TypeScript + Vite SPA on the frontend and a Python 3.11+ FastAPI backend with multi-gigabyte historical NetCDF caches, this ADR documents the decoupled architecture, client URL resolution, and Edge proxy integration.
+
+### Decisions & Architecture
+
+1. **Dual Directory Root Support:**
+   - Added root `package.json` with scripts (`build`, `dev`, `lint`, `test`) executing against `frontend/` via `npm --prefix frontend`.
+   - Added root `vercel.json` configured with `buildCommand: "npm --prefix frontend run build"`, `outputDirectory: "frontend/dist"`, framework preset `vite`, and SPA fallback rewrites.
+   - Added `frontend/vercel.json` so deployments configured with "Root Directory: frontend" in the Vercel dashboard work identically.
+
+2. **Upload Safety (`.vercelignore`):**
+   - Configured `.vercelignore` to strictly exclude `data/cache/` (1.5+ GB NetCDF caches), `backend/`, `data/outputs/`, `.pytest_cache/`, and test fixtures, keeping Vercel deployment payloads small and fast.
+
+3. **Universal Vercel Edge API Proxy (`api/[...path].js` & `frontend/api/[...path].js`):**
+   - Implemented a lightweight, zero-dependency Vercel Edge Function proxy that intercepts `/api/*` requests on Vercel and forwards them to the environment variable `BACKEND_URL`.
+   - Handles query parameters, headers, and request bodies for POST/PUT requests, and streams back binary responses (such as PNG change/significance map overlays and GeoTIFFs).
+   - If `BACKEND_URL` is not yet configured, returns a helpful 503 JSON message instructing the user to configure `BACKEND_URL` in their Vercel Project Settings.
+
+4. **Client API URL Resolver (`frontend/src/api/client.ts`):**
+   - Introduced `getApiUrl()` and `apiFetch()` across all frontend API clients (`catalog`, `availability`, `regions`, `trends`, `change`, `significance`, `reports`).
+   - Supports `VITE_API_BASE_URL` when a direct cross-origin connection is preferred, and falls back to relative `/api/*` paths when using the Vercel Edge proxy or Vite local dev proxy.
+   - Normalizes nested overlay and download URLs (`overlay_url`, `geotiff_url`, `pdf_url`, `csv_url`) so that rendered image overlays in Leaflet resolve properly in all deployment topologies.
+
+5. **Production Backend Containerization (`Dockerfile`):**
+   - Created a production Python 3.11-slim `Dockerfile` with system dependencies (`libgdal-dev`, `libgeos-dev`, `libproj-dev`, `libpq-dev`), requirements installation, and health checks, ready for one-click deployment to Railway, Render, Fly.io, or Google Cloud Run.
+

@@ -1,6 +1,7 @@
 /**
  * Trend Analysis API client (SPEC Section 8, 12.2, 12.3).
  */
+import { apiFetch, getApiUrl } from './client';
 
 export interface TimeSeriesPoint {
   date: string;
@@ -129,7 +130,7 @@ export interface TimeSeriesRequestPayload {
 export async function executeTimeSeriesAnalysis(
   payload: TimeSeriesRequestPayload
 ): Promise<TimeSeriesResult> {
-  const response = await fetch('/api/analysis/timeseries', {
+  const response = await apiFetch('/api/analysis/timeseries', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -152,16 +153,19 @@ export async function executeTimeSeriesAnalysis(
 
   // If points are already included in response, return directly
   if (data.points && Array.isArray(data.points)) {
+    if (data.series_url) data.series_url = getApiUrl(data.series_url);
     return data as TimeSeriesResult;
   }
 
   // Fallback to series_url fetch if points were not embedded
   if (data.series_url) {
-    const seriesRes = await fetch(data.series_url);
+    const seriesRes = await apiFetch(data.series_url);
     if (!seriesRes.ok) {
       throw new Error(`Failed to load full time-series results (${seriesRes.status})`);
     }
-    return seriesRes.json();
+    const fullData = await seriesRes.json();
+    if (fullData.series_url) fullData.series_url = getApiUrl(fullData.series_url);
+    return fullData;
   }
 
   return data as TimeSeriesResult;
@@ -171,9 +175,11 @@ export async function fetchTimeSeriesResult(seriesId: string): Promise<TimeSerie
   const url = seriesId.startsWith('/api/results/series/')
     ? seriesId
     : `/api/results/series/${seriesId}`;
-  const response = await fetch(url);
+  const response = await apiFetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch series ${seriesId} (${response.status})`);
   }
-  return response.json();
+  const data = await response.json();
+  if (data.series_url) data.series_url = getApiUrl(data.series_url);
+  return data;
 }

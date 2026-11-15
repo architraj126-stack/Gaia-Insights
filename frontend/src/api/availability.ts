@@ -1,4 +1,5 @@
 import type { Geometry } from 'geojson';
+import { apiFetch } from './client';
 
 export interface DatasetAvailabilityResponse {
   dataset_id: string;
@@ -34,7 +35,7 @@ export async function fetchDatasetAvailability(
   params: AvailabilityQueryParams
 ): Promise<DatasetAvailabilityResponse> {
   // Use POST to avoid URL length issues with complex geometry coordinates
-  const response = await fetch(`/api/datasets/${encodeURIComponent(datasetId)}/availability`, {
+  const response = await apiFetch(`/api/datasets/${encodeURIComponent(datasetId)}/availability`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

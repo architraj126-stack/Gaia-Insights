@@ -1,6 +1,7 @@
 /**
  * Scientific Report Generation & Export API client (SPEC 10.7, 10.8, 15.4, 17.3).
  */
+import { apiFetch, getApiUrl } from './client';
 
 export interface ReportSectionsConfig {
   executive_summary: boolean;
@@ -53,8 +54,21 @@ export interface CreateReportPayload {
 /**
  * Creates and compiles a multi-page report from stored runs via POST /api/reports
  */
+function normalizeReportResponse(report: ReportResponse): ReportResponse {
+  if (report.downloads) {
+    if (report.downloads.pdf_url) report.downloads.pdf_url = getApiUrl(report.downloads.pdf_url);
+    if (report.downloads.csv_url) report.downloads.csv_url = getApiUrl(report.downloads.csv_url);
+    if (report.downloads.chart_png_url) report.downloads.chart_png_url = getApiUrl(report.downloads.chart_png_url);
+    if (report.downloads.change_overlay_url) report.downloads.change_overlay_url = getApiUrl(report.downloads.change_overlay_url);
+    if (report.downloads.change_geotiff_url) report.downloads.change_geotiff_url = getApiUrl(report.downloads.change_geotiff_url);
+    if (report.downloads.significance_overlay_url) report.downloads.significance_overlay_url = getApiUrl(report.downloads.significance_overlay_url);
+    if (report.downloads.significance_geotiff_url) report.downloads.significance_geotiff_url = getApiUrl(report.downloads.significance_geotiff_url);
+  }
+  return report;
+}
+
 export async function generateReport(payload: CreateReportPayload): Promise<ReportResponse> {
-  const resp = await fetch('/api/reports', {
+  const resp = await apiFetch('/api/reports', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -73,16 +87,18 @@ export async function generateReport(payload: CreateReportPayload): Promise<Repo
     throw new Error(errMessage);
   }
 
-  return (await resp.json()) as ReportResponse;
+  const data = (await resp.json()) as ReportResponse;
+  return normalizeReportResponse(data);
 }
 
 /**
  * Fetches an existing report by ID via GET /api/reports/{id}
  */
 export async function fetchReport(reportId: string): Promise<ReportResponse> {
-  const resp = await fetch(`/api/reports/${reportId}`);
+  const resp = await apiFetch(`/api/reports/${reportId}`);
   if (!resp.ok) {
     throw new Error(`Report '${reportId}' not found (${resp.status})`);
   }
-  return (await resp.json()) as ReportResponse;
+  const data = (await resp.json()) as ReportResponse;
+  return normalizeReportResponse(data);
 }
